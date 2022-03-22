@@ -1,0 +1,83 @@
+openapi: 3.0.3
+info:
+  title: "simple-tracking-api"
+  version: "1.0"
+  description: "API for the application simple-tracking. The application objective is to tracks delivery packages"
+  contact:
+    name: "Caio Gomes"
+    email: "caiocsgomes@gmail.com"
+tags:
+  - name: "tracking"
+paths:
+  "/clients/{id_client}":
+    get:
+      description: "Returns a client based on ID."
+      operationId: "/clients/{id_client}"
+      parameters:
+        - name: id_client
+          in: path
+          description: Client ID
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Returns for client based on ID."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Client"
+
+components:
+  schemas:
+    Client:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+        address:
+          $ref: "#/components/schemas/Address"
+    Address:
+      type: object
+      properties:
+        street:
+          type: string
+        number:
+          type: number
+        postal_code:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        address_type:
+          type: string
+    Company:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        address:
+          $ref: "#/components/schemas/Address"
+    Package:
+      type: object
+      properties:
+        sku:
+          type: string
+        client:
+          $ref: "#/components/schemas/Address"
+        shipping_date:
+          type: string
+        delivery_date:
+          type: string
+    TrackingLog:
+      type: object
+      properties:
+        package:
+          $ref: "#/components/schemas/Package"
+        address:
+          $ref: "#/components/schemas/Address"
