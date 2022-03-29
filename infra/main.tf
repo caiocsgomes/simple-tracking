@@ -1,5 +1,5 @@
 module "apigateway" {
-  source = "./apigateway"
+  source           = "./apigateway"
   openapispec_path = "./openapi.yaml"
-  apiname = "simpletracking-api"
+  apiname          = "simpletracking-api"
 }

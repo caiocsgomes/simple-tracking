@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: "simple-tracking-api"
   version: "1.0"
-  description: "API for the application simple-tracking. The application objective is to tracks delivery packages"
+  description: "API for the application simple-tracking. The application objective is to track delivery packages"
   contact:
     name: "Caio Gomes"
     email: "caiocsgomes@gmail.com"
@@ -12,7 +12,7 @@ paths:
   "/clients/{id_client}":
     get:
       description: "Returns a client based on ID."
-      operationId: "/clients/{id_client}"
+      operationId: "get/clients/{id_client}"
       parameters:
         - name: id_client
           in: path
@@ -22,7 +22,48 @@ paths:
             type: string
       responses:
         "200":
-          description: "Returns for client based on ID."
+          description: "Client response."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Client"
+      x-amazon-apigateway-integration:
+        type: "mock"
+
+    put:
+      description: "Updates a client"
+      operationId: "put/clients/{id_client}"
+      requestBody:
+        description: "Client request."
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Client"
+      responses:
+        "200":
+          description: "Client response."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Client"
+      x-amazon-apigateway-integration:
+        type: "mock"
+
+  "/clients":
+    post:
+      description: "Add a new client"
+      operation: "post/clients"
+      requestBody:
+        description: "Client request."
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Client"
+      responses:
+        "200":
+          description: "Client response."
           content:
             application/json:
               schema:
@@ -37,6 +78,7 @@ components:
       properties:
         id:
           type: integer
+          readOnly: true
         email:
           type: string
         address:
