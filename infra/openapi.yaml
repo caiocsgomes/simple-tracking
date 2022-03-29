@@ -27,6 +27,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Client"
+      x-amazon-apigateway-integration:
+        type: "mock"
 
 components:
   schemas:
