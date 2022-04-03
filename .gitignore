@@ -1,3 +1,5 @@
 .env
 .vscode/
 app/venv/
+.idea/
+*__pycache__*
