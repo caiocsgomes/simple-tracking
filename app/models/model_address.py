@@ -27,6 +27,33 @@ class Address(db.Model):
         db.session.commit()
         return self
 
+    @staticmethod
+    def load(id):
+        return Address.query.get(id)
+
+    @staticmethod
+    def all():
+        return Address.query.all()
+
+    @staticmethod
+    def delete(id):
+        address = Address.load(id)
+        db.session.delete(address)
+        db.session.commit()
+        return address
+
+    @staticmethod
+    def update(id, street, number, postal_code, city, state, address_type):
+        address = Address.load(id)
+        address.street = street
+        address.number = number
+        address.postal_code = postal_code
+        address.city = city
+        address.state = state
+        address.address_type = address_type
+        db.session.commit()
+        return address
+
 
 class AddressSchema(Schema):
     street = fields.Str()

@@ -1,6 +1,10 @@
+import logging
+
+
 class Config:
     DEBUG = False
     DEVELOPMENT = False
+    LOG_LEVEL = logging.INFO
 
 
 class ProdConfig(Config):
@@ -14,4 +18,6 @@ class StagingConfig(Config):
 class DevConfig(Config):
     DEBUG = True
     DEVELOPMENT = True
-    SQL_ALCHEMY_DATABASE_URI = 'sqlite:///site.db'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///site.db'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    LOG_LEVEL = logging.DEBUG
