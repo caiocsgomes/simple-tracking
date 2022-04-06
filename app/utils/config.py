@@ -5,6 +5,7 @@ class Config:
     DEBUG = False
     DEVELOPMENT = False
     LOG_LEVEL = logging.INFO
+    APP_NAME = 'simple-tracking'
 
 
 class ProdConfig(Config):

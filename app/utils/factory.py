@@ -1,14 +1,12 @@
 from flask import Flask
-from app.utils.database import db
-from app.routes.v1.routes_address import routes_address
-import logging
+from utils.database import db
+from routes.v1.routes_address import routes_address
 
 
 def create_app(config):
-    app = Flask(__name__)
+    app = Flask(config.APP_NAME)
     app.config.from_object(config)
 
-    app.config.from_object(config)
     app.register_blueprint(routes_address, url_prefix='/api')
 
     db.init_app(app)

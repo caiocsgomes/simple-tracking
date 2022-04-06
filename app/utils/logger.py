@@ -1,8 +1,7 @@
 import logging
 import sys
-from logging.handlers import TimedRotatingFileHandler
 FORMATTER = logging.Formatter(
-    "%(asctime)s — %(name)s — %(levelname)s — %(message)s")
+    "%(levelname)s — %(asctime)s — %(name)s — %(message)s")
 
 
 def get_console_handler():
@@ -15,5 +14,5 @@ def get_logger(logger_name):
     logger = logging.getLogger(logger_name)
     logger.setLevel(logging.DEBUG)
     logger.addHandler(get_console_handler())
-    logger.propagate = True
+    logger.propagate = False
     return logger
