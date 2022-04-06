@@ -1,4 +1,4 @@
-from app.utils.database import db
+from utils.database import db
 from marshmallow import Schema, fields, post_load
 
 

@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from app.models.model_address import AddressSchema, Address
+from models.model_address import AddressSchema, Address
 
 routes_address = Blueprint("routes_address", __name__)
 

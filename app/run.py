@@ -1,5 +1,5 @@
-from app.utils.factory import create_app
-from app.utils.config import ProdConfig, DevConfig
+from utils.factory import create_app
+from utils.config import ProdConfig, DevConfig
 import os
 
 if __name__ == '__main__':
