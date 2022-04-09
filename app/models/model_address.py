@@ -1,5 +1,6 @@
-from utils.database import db
 from marshmallow import Schema, fields, post_load
+
+from utils.database import db
 
 
 class Address(db.Model):
@@ -28,7 +29,7 @@ class Address(db.Model):
         return self
 
     @staticmethod
-    def load(id):
+    def get_by_id(id: int):
         return Address.query.get(id)
 
     @staticmethod
@@ -36,15 +37,15 @@ class Address(db.Model):
         return Address.query.all()
 
     @staticmethod
-    def delete(id):
-        address = Address.load(id)
+    def delete(cls, id):
+        address = cls.get_by_id()
         db.session.delete(address)
         db.session.commit()
         return address
 
     @staticmethod
-    def update(id, street, number, postal_code, city, state, address_type):
-        address = Address.load(id)
+    def update(cls, id, street, number, postal_code, city, state, address_type):
+        address = cls.get_by_id(id)
         address.street = street
         address.number = number
         address.postal_code = postal_code
@@ -56,6 +57,7 @@ class Address(db.Model):
 
 
 class AddressSchema(Schema):
+    id = fields.Int()
     street = fields.Str()
     number = fields.Int()
     postal_code = fields.Str()

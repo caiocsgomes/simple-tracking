@@ -1,31 +1,38 @@
 from flask import Blueprint, request
+
+import utils.responses as responses
 from models.model_address import AddressSchema, Address
 from utils.logger import get_logger
+
 routes_address = Blueprint("routes_address", __name__)
 
 logger = get_logger(__name__)
+
 
 @routes_address.route("/v1/address", methods=["POST"])
 def create_address():
     try:
         data = request.get_json()
-        logger.debug(data)
         address_schema = AddressSchema()
         address = address_schema.load(data)
         result = address_schema.dump(address.create())
-        return result, 200
+        return responses.respond_with(responses.SUCCESS_200, body=result)
     except Exception as e:
-        print(e)
+        error = str(e)
+        logger.error(error)
+        return responses.respond_with(responses.SERVER_ERROR_500, error=error)
 
 
 @routes_address.route("/v1/address/<int:address_id>", methods=["GET"])
 def get_address(address_id):
     try:
-        address = Address.get(address_id)
+        address = Address.get_by_id(address_id)
         result = AddressSchema().dump(address)
-        return result, 200
+        return responses.respond_with(responses.SUCCESS_200, body=result)
     except Exception as e:
-        print(e)
+        error = str(e)
+        logger.error(error)
+        return responses.respond_with(responses.SERVER_ERROR_500, error=error)
 
 
 @routes_address.route("/v1/address/<int:address_id>", methods=["PUT"])
