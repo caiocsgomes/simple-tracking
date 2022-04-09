@@ -29,10 +29,6 @@ class Address(db.Model):
         return self
 
     @staticmethod
-    def get_by_id(id: int):
-        return Address.query.get(id)
-
-    @staticmethod
     def all():
         return Address.query.all()
 

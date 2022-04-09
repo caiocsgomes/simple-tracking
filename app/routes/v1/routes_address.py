@@ -3,20 +3,21 @@ from marshmallow.exceptions import ValidationError
 
 import utils.responses as responses
 from models.model_address import AddressSchema, Address
+from repository.repository_address import AddressRepository, AbstractRepository
 from utils.logger import get_logger
 
 routes_address = Blueprint("routes_address", __name__)
-
+repo: AbstractRepository = AddressRepository()
 logger = get_logger(__name__)
+schema = AddressSchema()
 
 
 @routes_address.route("/v1/address", methods=["POST"])
 def create_address():
     try:
         data = request.get_json()
-        address_schema = AddressSchema()
-        address = address_schema.load(data)
-        result = address_schema.dump(address.create())
+        address = schema.load(data)
+        result = schema.dump(repo.create(address))
         return responses.respond_with(responses.SUCCESS_200, body=result)
     except ValidationError as e:
         error = str(e)
@@ -31,11 +32,11 @@ def create_address():
 @routes_address.route("/v1/address/<int:address_id>", methods=["GET"])
 def get_address(address_id):
     try:
-        address = Address.get_by_id(address_id)
+        address = repo.get_by_id(address_id)
         if address is None:
-            logger.info(f"USERIDNOTFOUND-GET: {address_id}")
+            logger.info(f"ADDRESSIDNOTFOUND-GET: {address_id}")
             return responses.respond_with(responses.ENTITY_NOT_FOUND_404)
-        result = AddressSchema().dump(address)
+        result = schema.dump(address)
         return responses.respond_with(responses.SUCCESS_200, body=result)
     except Exception as e:
         error = str(e)
@@ -46,8 +47,11 @@ def get_address(address_id):
 @routes_address.route("/v1/address/<int:address_id>", methods=["PUT"])
 def update_address(address_id):
     try:
+        address = Address.get_by_id(address_id)
+        if address is None:
+            logger.info(f"USERIDNOTFOUND-GET: {address_id}")
+            return responses.respond_with(responses.ENTITY_NOT_FOUND_404)
         data = request.get_json()
-        address = Address.get(address_id)
         address_schema = AddressSchema()
         address = address_schema.load(data, instance=address, partial=True)
         result = address_schema.dump(address.update())
