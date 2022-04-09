@@ -1,4 +1,5 @@
 from flask import Blueprint, request
+from marshmallow.exceptions import ValidationError
 
 import utils.responses as responses
 from models.model_address import AddressSchema, Address
@@ -17,9 +18,13 @@ def create_address():
         address = address_schema.load(data)
         result = address_schema.dump(address.create())
         return responses.respond_with(responses.SUCCESS_200, body=result)
+    except ValidationError as e:
+        error = str(e)
+        logger.error(f"VALIDATIONERROR-POST: {error}")
+        return responses.respond_with(responses.INVALID_INPUT_422, error=error)
     except Exception as e:
         error = str(e)
-        logger.error(error)
+        logger.error(f"{type(e).__name__}: {error}")
         return responses.respond_with(responses.SERVER_ERROR_500, error=error)
 
 
@@ -27,11 +32,14 @@ def create_address():
 def get_address(address_id):
     try:
         address = Address.get_by_id(address_id)
+        if address is None:
+            logger.info(f"USERIDNOTFOUND-GET: {address_id}")
+            return responses.respond_with(responses.ENTITY_NOT_FOUND_404)
         result = AddressSchema().dump(address)
         return responses.respond_with(responses.SUCCESS_200, body=result)
     except Exception as e:
         error = str(e)
-        logger.error(error)
+        logger.error(f"{type(e).__name__}: {error}")
         return responses.respond_with(responses.SERVER_ERROR_500, error=error)
 
 

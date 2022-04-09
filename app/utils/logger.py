@@ -3,7 +3,7 @@ import os
 import sys
 
 FORMATTER = logging.Formatter(
-    "%(levelname)s — %(asctime)s — %(name)s — %(message)s")
+    "%(levelname)s — %(asctime)s — %(name)s:%(lineno)d — %(message)s")
 
 standard_log_level = int(os.getenv("APP_LOG_LEVEL")) or 10  # 10 = debug
 
