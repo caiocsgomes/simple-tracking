@@ -50,7 +50,8 @@ NOT_FOUND_HANDLER_404 = {
 
 SUCCESS_200 = {
     'http_code': 200,
-    'code': 'success'
+    'code': 'success',
+    'message': 'success'
 }
 
 

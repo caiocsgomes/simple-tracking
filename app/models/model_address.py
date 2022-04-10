@@ -23,33 +23,8 @@ class Address(db.Model):
     def __repr__(self):
         return f"Address({self.street}, {self.number} - {self.city}/{self.state})"
 
-    def create(self):
-        db.session.add(self)
-        db.session.commit()
-        return self
-
-    @staticmethod
-    def all():
-        return Address.query.all()
-
-    @staticmethod
-    def delete(cls, id):
-        address = cls.get_by_id()
-        db.session.delete(address)
-        db.session.commit()
-        return address
-
-    @staticmethod
-    def update(cls, id, street, number, postal_code, city, state, address_type):
-        address = cls.get_by_id(id)
-        address.street = street
-        address.number = number
-        address.postal_code = postal_code
-        address.city = city
-        address.state = state
-        address.address_type = address_type
-        db.session.commit()
-        return address
+    def __getitem__(self, item):
+        return getattr(self, item)
 
 
 class AddressSchema(Schema):

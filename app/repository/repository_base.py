@@ -16,3 +16,7 @@ class AbstractRepository(ABC):
     @abstractmethod
     def update(self, id: int, obj: db.Model) -> db.Model:
         pass
+
+    @abstractmethod
+    def delete(self, id: int):
+        pass
