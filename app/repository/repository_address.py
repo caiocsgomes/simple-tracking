@@ -4,9 +4,6 @@ from utils.database import db
 from utils.exceptions import NotFoundException
 
 
-# logger = get_logger(__name__)
-
-
 class AddressRepository(AbstractRepository):
 
     def get_by_id(self, id: int) -> Address:
