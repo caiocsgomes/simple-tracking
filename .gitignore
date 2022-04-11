@@ -4,3 +4,5 @@ app/venv/
 .idea/
 *__pycache__*
 *.db
+*.tfstate*
+*.terraform*
