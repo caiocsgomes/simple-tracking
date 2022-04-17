@@ -6,3 +6,4 @@ app/venv/
 *.db
 *.tfstate*
 *.terraform*
+*.tfvars

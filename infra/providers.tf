@@ -5,6 +5,12 @@ terraform {
       version = "4.6.0"
     }
   }
+  backend "s3" {
+    bucket         = "simpletracking-state-store-backend"
+    key            = "terraform.tfstate"
+    dynamodb_table = "simpletracking-state-locking-table"
+    region         = "us-east-1"
+  }
 }
 
 provider "aws" {

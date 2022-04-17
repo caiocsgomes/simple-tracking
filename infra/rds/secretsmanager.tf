@@ -5,7 +5,8 @@ resource "random_password" "password" {
 }
 
 resource "aws_secretsmanager_secret" "password" {
-  name = format("%s-db-password", var.db_name)
+  name                    = format("%s-db-password", var.db_name)
+  recovery_window_in_days = 0
 }
 
 resource "aws_secretsmanager_secret_version" "password" {
