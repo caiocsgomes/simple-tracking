@@ -5,7 +5,7 @@ resource "random_password" "password" {
 }
 
 resource "aws_secretsmanager_secret" "password" {
-  name = "simple-tracking-db-password"
+  name = format("%s-db-password", var.db_name)
 }
 
 resource "aws_secretsmanager_secret_version" "password" {

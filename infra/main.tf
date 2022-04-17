@@ -5,5 +5,6 @@ module "apigateway" {
 }
 
 module "rds" {
-  source = "./rds"
+  source  = "./rds"
+  db_name = "simpletracking"
 }

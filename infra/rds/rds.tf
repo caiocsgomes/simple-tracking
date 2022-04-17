@@ -1,5 +1,5 @@
 data "aws_secretsmanager_secret" "password" {
-  name       = "simple-tracking-db-password"
+  name       = format("%s-db-password", var.db_name)
   depends_on = [aws_secretsmanager_secret_version.password]
 }
 
@@ -7,16 +7,18 @@ data "aws_secretsmanager_secret_version" "password" {
   secret_id = data.aws_secretsmanager_secret.password.arn
 }
 
-resource "aws_db_instance" "simple-tracking" {
-  allocated_storage         = 20
-  engine                    = "postgres"
-  engine_version            = "14.2"
-  instance_class            = "db.t3.micro"
-  db_name                   = "simpletrackingdb"
+resource "aws_db_instance" "database" {
+  for_each                  = var.stages_config
+  allocated_storage         = each.value.memory_size
+  engine                    = var.engine
+  engine_version            = var.engine_version
+  instance_class            = each.value.db_instance_class
+  db_name                   = format("%s%s", var.db_name, each.key)
+  identifier                = format("%s%s", var.db_name, each.key)
   username                  = "dbadmin"
   password                  = data.aws_secretsmanager_secret_version.password.secret_string
   skip_final_snapshot       = false
-  final_snapshot_identifier = "simple-tracking-db-final-snapshot"
+  final_snapshot_identifier = format("%s-%s-final-snapshot", var.db_name, each.key)
   backup_window             = "01:00-02:00"
   storage_type              = "gp2"
 }
