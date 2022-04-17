@@ -18,7 +18,7 @@ resource "aws_db_instance" "database" {
   username                  = "dbadmin"
   password                  = data.aws_secretsmanager_secret_version.password.secret_string
   skip_final_snapshot       = false
-  final_snapshot_identifier = format("%s-%s-final-snapshot", var.db_name, each.key)
+  final_snapshot_identifier = format("%s-%s-final-snapshot-%s", var.db_name, each.key, local.current_date)
   backup_window             = "01:00-02:00"
   storage_type              = "gp2"
 }
