@@ -1,14 +1,14 @@
 variable "stages_config" {
-  type        = map(object({
+  type = map(object({
     memory_size       = number
     db_instance_class = string
   }))
-  default     = {
-    "dev"  = {
+  default = {
+    "dev" = {
       memory_size       = 20
       db_instance_class = "db.t3.micro"
     }
-    "qa"   = {
+    "qa" = {
       memory_size       = 20
       db_instance_class = "db.t3.micro"
     }
@@ -53,4 +53,9 @@ variable "db_instance_class" {
 
 variable "db_name" {
   type = string
+}
+
+variable "security_group_id" {
+  type        = string
+  description = "Security group id for the DB."
 }

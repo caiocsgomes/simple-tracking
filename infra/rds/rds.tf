@@ -21,4 +21,7 @@ resource "aws_db_instance" "database" {
   final_snapshot_identifier = format("%s-%s-final-snapshot-%s", var.db_name, each.key, local.current_date)
   backup_window             = "01:00-02:00"
   storage_type              = "gp2"
+  vpc_security_group_ids    = [
+    var.security_group_id,
+  ]
 }
