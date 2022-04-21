@@ -6,13 +6,13 @@ CREATE TABLE "client" (
 );
 
 CREATE TABLE "address" (
-  "id" int PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "street" varchar,
   "number" int,
   "postal_code" varchar,
   "city" varchar,
   "state" varchar,
-  "address_type" varchar
+  "address_type" varchar UNIQUE
 );
 
 CREATE TABLE "company" (
@@ -36,9 +36,9 @@ CREATE TABLE "tracking_log" (
   "date" timestamp
 );
 
-ALTER TABLE "address" ADD FOREIGN KEY ("id") REFERENCES "client" ("address_id");
+ALTER TABLE "client" ADD FOREIGN KEY ("address_id") REFERENCES "address" ("id");
 
-ALTER TABLE "address" ADD FOREIGN KEY ("id") REFERENCES "company" ("address_id");
+ALTER TABLE "company" ADD FOREIGN KEY ("address_id") REFERENCES "address" ("id");
 
 ALTER TABLE "package" ADD FOREIGN KEY ("client_id") REFERENCES "client" ("id");
 

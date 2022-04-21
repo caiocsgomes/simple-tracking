@@ -1,11 +1,7 @@
-from typing import TypeVar
-
 from models.model_address import Address
 from repository.repository_base import AbstractRepository
 from utils.database import db
 from utils.exceptions import NotFoundException
-
-T = TypeVar('T')
 
 
 class DefaultRepository(AbstractRepository):
