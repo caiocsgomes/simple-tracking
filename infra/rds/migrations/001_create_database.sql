@@ -16,13 +16,13 @@ CREATE TABLE "address" (
 );
 
 CREATE TABLE "company" (
-  "id" int PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "name" varchar,
   "address_id" int
 );
 
 CREATE TABLE "package" (
-  "id" int PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "sku" varchar,
   "client_id" int,
   "shipping_date" timestamp,
