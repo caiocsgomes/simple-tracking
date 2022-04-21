@@ -12,7 +12,7 @@ CREATE TABLE "address" (
   "postal_code" varchar,
   "city" varchar,
   "state" varchar,
-  "address_type" varchar UNIQUE
+  "address_type" varchar
 );
 
 CREATE TABLE "company" (
