@@ -1,5 +1,7 @@
 from marshmallow import Schema, fields, post_load
+from sqlalchemy.orm import relationship, backref
 
+from models.model_address import AddressSchema
 from utils.database import db
 
 
@@ -8,6 +10,7 @@ class Client(db.Model):
     name = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), nullable=False)
     address_id = db.Column(db.Integer, db.ForeignKey('address.id'))
+    address = relationship("Address", backref=backref("client", uselist=False))
 
     def __init__(self, name: str, email: str, address_id: int):
         self.name = name
@@ -23,6 +26,7 @@ class ClientSchema(Schema):
     name = fields.Str()
     email = fields.Str()
     address_id = fields.Int()
+    address = fields.Nested(AddressSchema, many=False)
 
     @post_load
     def make_client(self, data, **kwargs):
