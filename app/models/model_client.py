@@ -19,6 +19,9 @@ class Client(db.Model):
     def __repr__(self):
         return f"Client({self.name}, {self.email}, {self.address_id})"
 
+    def __getitem__(self, item):
+        return getattr(self, item)
+
 
 class ClientSchema(Schema):
     class Meta:

@@ -1,4 +1,3 @@
-from models.model_address import Address
 from repository.repository_base import AbstractRepository
 from utils.database import db
 from utils.exceptions import NotFoundException
@@ -22,9 +21,9 @@ class DefaultRepository(AbstractRepository):
         return obj
 
     def update(self, id: int, new_obj: db.Model) -> db.Model:
-        obj = Address.query.get(id)
+        obj = self.entity.query.get(id)
         if obj is None:
-            raise NotFoundException("Address not found")
+            raise NotFoundException("Entity not found")
         new_address_keys = [x for x in vars(new_obj) if not x.startswith('_')]
         for key in new_address_keys:
             if new_obj[key] != obj[key]:
