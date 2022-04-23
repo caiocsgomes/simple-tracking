@@ -22,6 +22,9 @@ class Client(db.Model):
 
 
 class ClientSchema(Schema):
+    class Meta:
+        load_only = ('address_id',)
+
     id = fields.Int()
     name = fields.Str()
     email = fields.Str()
