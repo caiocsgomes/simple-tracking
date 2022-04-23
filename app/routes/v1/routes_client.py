@@ -31,10 +31,10 @@ def create_client():
 @routes_client.route("/v1/client/<int:client_id>", methods=['GET'])
 def get_client(client_id: int):
     try:
-        address = repo.get_by_id(client_id)
-        return responses.respond_with(responses.SUCCESS_200, body=schema.dump(address))
+        client = repo.get_by_id(client_id)
+        return responses.respond_with(responses.SUCCESS_200, body=schema.dump(client))
     except NotFoundException:
-        logger.info(f"ADDRESSIDNOTFOUND-GET: {client_id}")
+        logger.info(f"CLIENTIDNOTFOUND-GET: {client_id}")
         return responses.respond_with(responses.ENTITY_NOT_FOUND_404)
     except Exception as e:
         logger.error(f"{type(e).__name__}: {str(e)}")
@@ -44,11 +44,11 @@ def get_client(client_id: int):
 @routes_client.route("/v1/client/<int:client_id>", methods=['PUT'])
 def update_client(client_id: int):
     try:
-        new_address = schema.load(request.get_json(), partial=True)
-        updated_address = repo.update(client_id, new_address)
-        return responses.respond_with(responses.SUCCESS_200, body=schema.dump(updated_address))
+        new_client = schema.load(request.get_json(), partial=True)
+        updated_client = repo.update(client_id, new_client)
+        return responses.respond_with(responses.SUCCESS_200, body=schema.dump(updated_client))
     except NotFoundException:
-        logger.info(f"ADDRESSIDNOTFOUND-GET: {client_id}")
+        logger.info(f"CLIENTIDNOTFOUND-GET: {client_id}")
         return responses.respond_with(responses.ENTITY_NOT_FOUND_404)
     except Exception as e:
         logger.error(f"{type(e).__name__}: {str(e)}")
@@ -60,11 +60,11 @@ def delete_client(client_id: int):
     try:
         repo.delete(client_id)
     except NotFoundException:
-        logger.info(f"ADDRESSIDNOTFOUND-GET: {client_id}")
+        logger.info(f"CLIENTIDNOTFOUND-GET: {client_id}")
         return responses.respond_with(responses.ENTITY_NOT_FOUND_404)
     except Exception as e:
         logger.error(f"{type(e).__name__}: {str(e)}")
         return responses.respond_with(responses.SERVER_ERROR_500, error=str(e))
     else:
-        logger.info(f"ADDRESSDELETED: {client_id}")
+        logger.info(f"CLIENTDELETED: {client_id}")
         return responses.respond_with(responses.SUCCESS_200)
