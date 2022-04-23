@@ -5,7 +5,7 @@ import sys
 FORMATTER = logging.Formatter(
     "%(levelname)s — %(asctime)s — %(name)s:%(lineno)d — %(message)s")
 
-standard_log_level = int(os.getenv("APP_LOG_LEVEL")) or 10  # 10 = debug
+standard_log_level = 10 if os.getenv("APP_LOG_LEVEL") is None else int(os.getenv("APP_LOG_LEVEL"))  # 10 = debug
 
 
 def get_console_handler():
