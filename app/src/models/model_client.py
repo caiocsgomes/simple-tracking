@@ -1,7 +1,7 @@
 from marshmallow import Schema, fields, post_load
 
-from src.models.model_address import AddressSchema
-from src.utils.database import db
+from models.model_address import AddressSchema
+from utils.database import db
 
 
 class Client(db.Model):

@@ -1,10 +1,10 @@
 from flask import Flask
 
-from src.routes.v1.routes_address import routes_address
-from src.routes.v1.routes_client import routes_client
-from src.routes.v1.routes_company import routes_company
-from src.utils.config import Config
-from src.utils.database import db
+from routes.v1.routes_address import routes_address
+from routes.v1.routes_client import routes_client
+from routes.v1.routes_company import routes_company
+from utils.config import Config
+from utils.database import db
 
 
 def create_app(config: Config):

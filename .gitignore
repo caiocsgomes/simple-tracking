@@ -1,6 +1,6 @@
 .env
 .vscode/
-app/venv/
+*venv*
 .idea/
 *__pycache__*
 *.db

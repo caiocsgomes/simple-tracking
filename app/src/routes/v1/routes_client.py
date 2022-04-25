@@ -1,12 +1,12 @@
 from flask import Blueprint, request
 from marshmallow.exceptions import ValidationError
 
-from src import utils as responses
-from src.models.model_client import Client
-from src.models.model_client import ClientSchema
-from src.repository.repository_default import DefaultRepository, AbstractRepository
-from src.utils.exceptions import NotFoundException
-from src.utils.logger import get_logger
+import utils.responses as responses
+from models.model_client import Client
+from models.model_client import ClientSchema
+from repository.repository_default import DefaultRepository, AbstractRepository
+from utils.exceptions import NotFoundException
+from utils.logger import get_logger
 
 routes_client = Blueprint("routes_client", __name__)
 logger = get_logger(__name__)

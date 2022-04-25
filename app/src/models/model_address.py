@@ -1,6 +1,6 @@
 from marshmallow import Schema, fields, post_load
 
-from src.utils.database import db
+from utils.database import db
 
 
 class Address(db.Model):

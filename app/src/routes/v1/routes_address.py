@@ -1,12 +1,12 @@
 from flask import Blueprint, request
 from marshmallow.exceptions import ValidationError
 
-from src import utils as responses
-from src.models.model_address import AddressSchema, Address
-from src.repository.repository_base import AbstractRepository
-from src.repository.repository_default import DefaultRepository
-from src.utils.exceptions import NotFoundException
-from src.utils.logger import get_logger
+import utils.responses as responses
+from models.model_address import AddressSchema, Address
+from repository.repository_base import AbstractRepository
+from repository.repository_default import DefaultRepository
+from utils.exceptions import NotFoundException
+from utils.logger import get_logger
 
 routes_address = Blueprint("routes_address", __name__)
 repo: AbstractRepository = DefaultRepository(Address)
