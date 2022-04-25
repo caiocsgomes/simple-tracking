@@ -1,6 +1,6 @@
-from repository.repository_base import AbstractRepository
-from utils.database import db
-from utils.exceptions import NotFoundException
+from src.repository.repository_base import AbstractRepository
+from src.utils.database import db
+from src.utils.exceptions import NotFoundException
 
 
 class DefaultRepository(AbstractRepository):

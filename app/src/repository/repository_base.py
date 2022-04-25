@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from utils.database import db
+from src.utils.database import db
 
 
 class AbstractRepository(ABC):
