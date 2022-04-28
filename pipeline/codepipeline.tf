@@ -1,32 +1,33 @@
-resource aws_iam_role "pipeline_role" {
-  name               = format("%s-role", var.pipeline_name)
-  assume_role_policy = data.aws_iam_policy_document.pipeline_trust_policy_document.json
-}
-
-resource "aws_iam_role_policy" "pipeline_policy" {
-  name   = format("%s-policy", var.pipeline_name)
-  role   = aws_iam_role.pipeline_role.id
-  policy = data.aws_iam_policy_document.pipeline_policy_document.json
-}
-
-data "aws_iam_policy_document" "pipeline_policy_document" {
-  statement {
-    actions   = ["s3:GetObject", "s3:PutObject", "s3:ListBucket"]
-    resources = ["*"]
+resource "aws_codepipeline" "pipeline" {
+  name     = var.pipeline_name
+  role_arn = aws_iam_role.pipeline_role.arn
+  artifact_store {
+    location = aws_s3_bucket.codepipeline_bucket.bucket
+    type     = "S3"
   }
-  statement {
-    actions   = ["codebuild:StartBuild", "codebuild:BatchGetBuilds"]
-    resources = ["*"]
-  }
-}
-
-data "aws_iam_policy_document" "pipeline_trust_policy_document" {
-  statement {
-    principals {
-      type        = "Service"
-      identifiers = ["codepipeline.amazonaws.com"]
+  stage {
+    name = "Source"
+    action {
+      category         = "Source"
+      name             = "github"
+      owner            = "AWS"
+      provider         = "CodeStarSourceConnection"
+      version          = "1"
+      output_artifacts = ["source_output"]
+      configuration    = {
+        ConnectionArn    = aws_codestarconnections_connection.github_connection.arn
+        FullRepositoryId = format("%s/%s", var.github_owner, var.github_repo)
+        BranchName       = var.github_branch
+      }
     }
-    actions = ["sts:AssumeRole"]
   }
 }
 
+resource "aws_codestarconnections_connection" "github_connection" {
+  name          = format("%s-%s-%s", var.pipeline_name, var.github_owner, var.github_repo)
+  provider_type = "GitHub"
+}
+
+resource "aws_s3_bucket" "codepipeline_bucket" {
+  bucket = format("%s-bucket", var.pipeline_name)
+}
