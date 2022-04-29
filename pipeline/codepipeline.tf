@@ -21,13 +21,25 @@ resource "aws_codepipeline" "pipeline" {
       }
     }
   }
+
+  stage {
+    name = "Build"
+    action {
+      category         = "Build"
+      name             = "CodeBuild"
+      owner            = "AWS"
+      provider         = "CodeBuild"
+      version          = "1"
+      input_artifacts  = ["source_output"]
+      output_artifacts = ["build_output"]
+      configuration    = {
+        ProjectName = aws_codebuild_project.build_project.name
+      }
+    }
+  }
 }
 
 resource "aws_codestarconnections_connection" "github_connection" {
   name          = format("%s-%s-%s", var.pipeline_name, var.github_owner, var.github_repo)
   provider_type = "GitHub"
-}
-
-resource "aws_s3_bucket" "codepipeline_bucket" {
-  bucket = format("%s-bucket", var.pipeline_name)
 }

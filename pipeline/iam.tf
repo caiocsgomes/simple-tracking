@@ -1,10 +1,11 @@
+# CodePipeline IAM
 resource aws_iam_role "pipeline_role" {
   name               = format("%s-role", var.pipeline_name)
   assume_role_policy = data.aws_iam_policy_document.pipeline_trust_policy_document.json
 }
 
 resource "aws_iam_role_policy" "pipeline_policy" {
-  name   = format("%s-policy", var.pipeline_name)
+  name   = format("%s-pipeline-policy", var.pipeline_name)
   role   = aws_iam_role.pipeline_role.id
   policy = data.aws_iam_policy_document.pipeline_policy_document.json
 }
@@ -32,3 +33,36 @@ data "aws_iam_policy_document" "pipeline_trust_policy_document" {
     actions = ["sts:AssumeRole"]
   }
 }
+
+# CodeBuild IAM
+resource "aws_iam_role" "build_role" {
+  name               = format("%s-build-role", var.pipeline_name)
+  assume_role_policy = data.aws_iam_policy_document.build_trust_policy_document.json
+}
+
+resource "aws_iam_role_policy" "build_policy" {
+  name   = format("%s-policy", var.pipeline_name)
+  role   = aws_iam_role.build_role.id
+  policy = data.aws_iam_policy_document.build_policy_document.json
+}
+
+data "aws_iam_policy_document" "build_policy_document" {
+  statement {
+    actions   = [
+      "ecr:GetAuthorizationToken", "ecr:BatchCheckLayerAvailability", "ecr:GetDownloadUrlForLayer", "ecr:BatchGetImage",
+      "ecr:PutImage", "ecr:InitiateLayerUpload", "ecr:UploadLayerPart", "ecr:CompleteLayerUpload"
+    ]
+    resources = ["*"]
+  }
+}
+
+data "aws_iam_policy_document" "build_trust_policy_document" {
+  statement {
+    principals {
+      type        = "Service"
+      identifiers = ["codebuild.amazonaws.com"]
+    }
+    actions = ["sts:AssumeRole"]
+  }
+}
+
