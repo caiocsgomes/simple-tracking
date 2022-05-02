@@ -40,6 +40,6 @@ resource "aws_codepipeline" "pipeline" {
 }
 
 resource "aws_codestarconnections_connection" "github_connection" {
-  name          = format("%s-%s-%s", var.pipeline_name, var.github_owner, var.github_repo)
+  name          = format("%s-%s", var.pipeline_name, var.github_repo)
   provider_type = "GitHub"
 }

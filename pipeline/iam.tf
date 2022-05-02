@@ -14,8 +14,8 @@ data "aws_iam_policy_document" "pipeline_policy_document" {
   statement {
     actions   = ["s3:GetObject", "s3:PutObject", "s3:ListBucket"]
     resources = [
-      "${aws_s3_bucket.codepipeline_bucket.bucket}/",
-      "${aws_s3_bucket.codepipeline_bucket.bucket}/*"
+      aws_s3_bucket.codepipeline_bucket.arn,
+      "${aws_s3_bucket.codepipeline_bucket.arn}/*"
     ]
   }
   statement {
@@ -48,7 +48,7 @@ resource "aws_iam_role_policy" "build_policy" {
 
 data "aws_iam_policy_document" "build_policy_document" {
   statement {
-    actions   = [
+    actions = [
       "ecr:GetAuthorizationToken", "ecr:BatchCheckLayerAvailability", "ecr:GetDownloadUrlForLayer", "ecr:BatchGetImage",
       "ecr:PutImage", "ecr:InitiateLayerUpload", "ecr:UploadLayerPart", "ecr:CompleteLayerUpload"
     ]

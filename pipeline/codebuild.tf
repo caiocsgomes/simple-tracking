@@ -5,7 +5,7 @@ resource "aws_codebuild_project" "build_project" {
   build_timeout = "5"
 
   artifacts {
-    type = "NO_ARTIFACTS"
+    type = "CODEPIPELINE"
   }
 
   source {
