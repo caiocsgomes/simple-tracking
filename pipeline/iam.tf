@@ -12,14 +12,17 @@ resource "aws_iam_role_policy" "pipeline_policy" {
 
 data "aws_iam_policy_document" "pipeline_policy_document" {
   statement {
-    actions   = ["s3:GetObject", "s3:PutObject", "s3:ListBucket"]
+    actions = [
+      "s3:GetObject", "s3:PutObject", "s3:ListBucket", "s3:GetObjectVersion", "s3:GetBucketVersioning",
+      "s3:PuObjectAcl",
+    ]
     resources = [
       aws_s3_bucket.codepipeline_bucket.arn,
       "${aws_s3_bucket.codepipeline_bucket.arn}/*"
     ]
   }
   statement {
-    actions   = ["codebuild:StartBuild", "codebuild:BatchGetBuilds"]
+    actions   = ["codebuild:StartBuild", "codebuild:BatchGetBuilds", "codestar-connections:UseConnection"]
     resources = ["*"]
   }
 }
