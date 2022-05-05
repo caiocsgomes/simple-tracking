@@ -53,9 +53,20 @@ data "aws_iam_policy_document" "build_policy_document" {
   statement {
     actions = [
       "ecr:GetAuthorizationToken", "ecr:BatchCheckLayerAvailability", "ecr:GetDownloadUrlForLayer", "ecr:BatchGetImage",
-      "ecr:PutImage", "ecr:InitiateLayerUpload", "ecr:UploadLayerPart", "ecr:CompleteLayerUpload"
+      "ecr:PutImage", "ecr:InitiateLayerUpload", "ecr:UploadLayerPart", "ecr:CompleteLayerUpload",
+      "logs:CreateLogStream", "logs:CreateLogGroup", "logs:PutLogEvents", "codestar-connections:UseConnection",
     ]
     resources = ["*"]
+  }
+  statement {
+    actions = [
+      "s3:GetObject", "s3:PutObject", "s3:ListBucket", "s3:GetObjectVersion", "s3:GetBucketVersioning",
+      "s3:PuObjectAcl",
+    ]
+    resources = [
+      aws_s3_bucket.codepipeline_bucket.arn,
+      "${aws_s3_bucket.codepipeline_bucket.arn}/*"
+    ]
   }
 }
 

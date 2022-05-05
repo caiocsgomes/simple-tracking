@@ -14,9 +14,10 @@ resource "aws_codebuild_project" "build_project" {
   }
 
   environment {
-    compute_type = "BUILD_GENERAL1_SMALL"
-    image        = "aws/codebuild/standard:2.0"
-    type         = "LINUX_CONTAINER"
+    compute_type    = "BUILD_GENERAL1_SMALL"
+    image           = "aws/codebuild/standard:2.0"
+    type            = "LINUX_CONTAINER"
+    privileged_mode = true
     environment_variable {
       name  = "AWS_DEFAULT_REGION"
       value = data.aws_region.current.name
@@ -30,7 +31,7 @@ resource "aws_codebuild_project" "build_project" {
       value = aws_ecr_repository.ecr_repo.repository_url
     }
     environment_variable {
-      name  = "$IMAGE_REPO_NAME"
+      name  = "IMAGE_REPO_NAME"
       value = var.github_repo
     }
     environment_variable {
