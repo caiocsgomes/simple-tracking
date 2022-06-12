@@ -9,15 +9,17 @@ resource "aws_codepipeline" "pipeline" {
     name = "Source"
     action {
       category         = "Source"
-      name             = "github"
+      name             = "Github"
       owner            = "AWS"
       provider         = "CodeStarSourceConnection"
       version          = "1"
       output_artifacts = ["source_output"]
-      configuration    = {
-        ConnectionArn    = aws_codestarconnections_connection.github_connection.arn
-        FullRepositoryId = format("%s/%s", var.github_owner, var.github_repo)
-        BranchName       = var.github_branch
+
+      configuration = {
+        ConnectionArn        = aws_codestarconnections_connection.github_connection.arn
+        FullRepositoryId     = format("%s/%s", var.github_owner, var.github_repo)
+        BranchName           = var.github_branch
+        OutputArtifactFormat = "CODEBUILD_CLONE_REF"
       }
     }
   }
@@ -39,6 +41,7 @@ resource "aws_codepipeline" "pipeline" {
   }
 }
 
+## Open the console and finish the connection, it starts on pending state CodePipeline -> Settings -> Connections
 resource "aws_codestarconnections_connection" "github_connection" {
   name          = format("%s-%s", var.github_owner, var.github_repo)
   provider_type = "GitHub"
