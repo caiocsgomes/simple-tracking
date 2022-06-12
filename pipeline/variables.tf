@@ -3,11 +3,6 @@ variable "pipeline_name" {
   type        = string
 }
 
-variable "github_token" {
-  description = "The github token to use for the pipeline"
-  type        = string
-}
-
 variable "github_owner" {
   description = "The github owner to use for the pipeline"
   type        = string
