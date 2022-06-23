@@ -8,13 +8,13 @@ class Client(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), nullable=False)
-    address_id = db.Column(db.Integer, db.ForeignKey('address.id'))
     address = db.relationship("Address")
 
-    def __init__(self, name: str, email: str, address_id: int):
+    # TODO: Load address on request
+
+    def __init__(self, name: str, email: str):
         self.name = name
         self.email = email
-        self.address_id = address_id
 
     def __repr__(self):
         return f"Client({self.name}, {self.email}, {self.address_id})"
@@ -30,7 +30,6 @@ class ClientSchema(Schema):
     id = fields.Int()
     name = fields.Str()
     email = fields.Str()
-    address_id = fields.Int()
     address = fields.Nested(AddressSchema, many=False)
 
     @post_load

@@ -11,14 +11,16 @@ class Address(db.Model):
     city = db.Column(db.String(20), nullable=False)
     state = db.Column(db.String(20), nullable=False)
     address_type = db.Column(db.String(10), nullable=True)
+    client_id = db.Column(db.Integer, db.ForeignKey('client.id'))
 
-    def __init__(self, street, number, postal_code, city, state, address_type):
+    def __init__(self, street, number, postal_code, city, state, address_type, client_id):
         self.street = street
         self.number = number
         self.postal_code = postal_code
         self.city = city
         self.state = state
         self.address_type = address_type
+        self.client_id = client_id
 
     def __repr__(self):
         return f"Address({self.street}, {self.number} - {self.city}/{self.state})"
@@ -35,6 +37,7 @@ class AddressSchema(Schema):
     city = fields.Str()
     state = fields.Str()
     address_type = fields.Str()
+    client_id = fields.Int()
 
     @post_load
     def make_address(self, data, **kwargs):
