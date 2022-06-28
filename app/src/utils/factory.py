@@ -7,7 +7,7 @@ from utils.config import Config
 from utils.database import db
 
 
-def create_app(config: Config):
+def create_app(config: Config) -> Flask:
     app = Flask(config.APP_NAME)
     app.config.from_object(config)
 
