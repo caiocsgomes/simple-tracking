@@ -7,6 +7,9 @@ from sqlalchemy.engine import Engine
 db = SQLAlchemy()
 
 
+# TODO: change local db to postgresql
+# TODO: create docker compose to start postgresql and the api locally
+
 @event.listens_for(Engine, "connect")
 def _set_sqlite_pragma(dbapi_connection, connection_record):
     if isinstance(dbapi_connection, SQLite3Connection):

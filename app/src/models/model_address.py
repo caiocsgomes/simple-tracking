@@ -15,7 +15,10 @@ class Address(db.Model):
     state = db.Column(db.String(20), nullable=False)
     address_type = db.Column(db.String(10), nullable=True)
     # RULE: only one address can be preferred
-    # preferred = db.Column(db.Bool, nullable=False)
+    # TODO: add partial index to preferred
+    # https://stackoverflow.com/questions/27976683/creating-partial-unique-index-with-sqlalchemy-on-postgres
+    # https://stackoverflow.com/questions/59691425/how-to-enforce-that-there-is-only-one-true-value-in-a-column-per-names-in-an
+    # preferred = db.Column(db.Bool, nullable=False, default=False)
     client_id = db.Column(db.Integer, db.ForeignKey('client.id'))
 
     def __getitem__(self, item):
