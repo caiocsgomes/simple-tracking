@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/python:3.10.1-alpine3.15
+FROM public.ecr.aws/docker/library/python:3.10.1
 
 COPY src/requirements.txt /app/requirements.txt
 

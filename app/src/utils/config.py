@@ -17,8 +17,12 @@ class StagingConfig(Config):
 
 
 class DevConfig(Config):
+    pass
+
+
+class LocalConfig(Config):
     DEBUG = True
     DEVELOPMENT = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///site.db?check_same_thread=False'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:postgres@postgres:5432/simple_tracking'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     LOG_LEVEL = logging.DEBUG

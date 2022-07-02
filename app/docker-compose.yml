@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:14.4
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=simple_tracking
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+  flask:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+volumes:
+  db:
+    driver: local
