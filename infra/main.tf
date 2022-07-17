@@ -17,5 +17,6 @@ module "rds" {
 }
 
 module "ecs" {
-  source = "./ecs"
+  source       = "./ecs"
+  cluster_name = format("%s-cluster", var.project_name)
 }
