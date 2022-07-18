@@ -19,4 +19,6 @@ module "rds" {
 module "ecs" {
   source       = "./ecs"
   cluster_name = format("%s-cluster", var.project_name)
+  hosted_zone  = var.hosted_zone
+  alb_endpoint = var.alb_endpoint
 }

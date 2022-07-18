@@ -1,8 +1,9 @@
-variable "project_name" {
-  type = string
-}
+variable "project_name" {}
 
 variable "region" {
-  type    = string
   default = "us-east-1"
 }
+
+variable "hosted_zone" {}
+
+variable "alb_endpoint" {}

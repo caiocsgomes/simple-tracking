@@ -1,10 +1,10 @@
 resource "aws_acm_certificate" "cert" {
-  domain_name       = "simpletracking.caiogomes.me"
+  domain_name       = var.hosted_zone
   validation_method = "DNS"
 }
 
-data "aws_route53_zone" "domain_cert" {
-  name         = "caiogomes.me"
+data "aws_route53_zone" "hosted_zone" {
+  name         = var.alb_endpoint
   private_zone = false
 }
 
@@ -22,7 +22,7 @@ resource "aws_route53_record" "validation_record" {
   records         = [each.value.record]
   ttl             = 60
   type            = each.value.type
-  zone_id         = data.aws_route53_zone.domain_cert.zone_id
+  zone_id         = data.aws_route53_zone.hosted_zone.zone_id
 }
 
 resource "aws_acm_certificate_validation" "cert_validation" {
