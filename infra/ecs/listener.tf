@@ -1,4 +1,4 @@
-resource "aws_lb_listener" "example" {
+resource "aws_lb_listener" "listener" {
   load_balancer_arn = aws_alb.cluster_alb.arn
   port              = "443"
   protocol          = "HTTPS"
