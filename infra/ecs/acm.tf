@@ -1,11 +1,6 @@
 resource "aws_acm_certificate" "cert" {
   domain_name       = var.alb_endpoint
   validation_method = "DNS"
-  lifecycle {
-    prevent_destroy = true
-  }
-
-  ## TODO: fix tf not finding hosted zone
 }
 
 data "aws_route53_zone" "hosted_zone" {
