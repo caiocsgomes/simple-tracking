@@ -5,5 +5,5 @@ resource "aws_alb" "cluster_alb" {
   subnets            = data.aws_subnets.default_subnets.ids
   security_groups    = [aws_security_group.alb_security_group.id]
 
-  enable_deletion_protection = true
+  #  enable_deletion_protection = true
 }
