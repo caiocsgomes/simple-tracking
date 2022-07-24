@@ -5,6 +5,9 @@ from marshmallow import Schema, fields, post_load
 from utils.database import db
 
 
+# TODO: Decouple model from sqlalquemy
+# https://docs.sqlalchemy.org/en/14/orm/mapping_styles.html
+
 @dataclass
 class Address(db.Model):
     id = db.Column(db.Integer, primary_key=True)
