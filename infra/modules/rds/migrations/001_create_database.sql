@@ -6,7 +6,7 @@ CREATE TABLE "client" (
 );
 
 CREATE TABLE "address" (
-  "id" SERIAL PRIMARY KEY,
+  "id" int PRIMARY KEY,
   "street" varchar,
   "number" int,
   "postal_code" varchar,
@@ -16,13 +16,13 @@ CREATE TABLE "address" (
 );
 
 CREATE TABLE "company" (
-  "id" SERIAL PRIMARY KEY,
+  "id" int PRIMARY KEY,
   "name" varchar,
   "address_id" int
 );
 
 CREATE TABLE "package" (
-  "id" SERIAL PRIMARY KEY,
+  "id" int PRIMARY KEY,
   "sku" varchar,
   "client_id" int,
   "shipping_date" timestamp,
@@ -36,9 +36,9 @@ CREATE TABLE "tracking_log" (
   "date" timestamp
 );
 
-ALTER TABLE "client" ADD FOREIGN KEY ("address_id") REFERENCES "address" ("id");
+ALTER TABLE "address" ADD FOREIGN KEY ("id") REFERENCES "client" ("address_id");
 
-ALTER TABLE "company" ADD FOREIGN KEY ("address_id") REFERENCES "address" ("id");
+ALTER TABLE "address" ADD FOREIGN KEY ("id") REFERENCES "company" ("address_id");
 
 ALTER TABLE "package" ADD FOREIGN KEY ("client_id") REFERENCES "client" ("id");
 
