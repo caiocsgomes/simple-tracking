@@ -1,18 +1,24 @@
-from sqlite3 import Connection as SQLite3Connection
-
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import event
-from sqlalchemy.engine import Engine
+from sqlalchemy import create_engine, MetaData, Column, Integer, String, Table
 
 db = SQLAlchemy()
 
+engine = None
 
-# TODO: change local db to postgresql
-# TODO: create docker compose to start postgresql and the api locally
 
-@event.listens_for(Engine, "connect")
-def _set_sqlite_pragma(dbapi_connection, connection_record):
-    if isinstance(dbapi_connection, SQLite3Connection):
-        cursor = dbapi_connection.cursor()
-        cursor.execute("PRAGMA foreign_keys=ON;")
-        cursor.close()
+def init_engine(uri, **kwargs):
+    global engine
+    engine = create_engine(uri, **kwargs)
+    return engine
+
+
+def init_db():
+    metadata = MetaData()
+
+    client = Table('client', metadata,
+                   Column('id', Integer, primary_key=True),
+                   Column('name', String, nullable=False),
+                   Column('email', String, nullable=False),
+                   )
+
+    ## TODO: Study relationship
