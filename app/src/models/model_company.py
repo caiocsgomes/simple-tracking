@@ -1,20 +1,11 @@
 from marshmallow import Schema, fields, post_load
+from models.model_address import Address
 
-from utils.database import db
 
-
-class Company(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    address_id = db.Column(db.Integer, db.ForeignKey("address.id"), nullable=False)
-    address = db.relationship("Address")
-
-    def __init__(self, name, address_id):
-        self.name = name
-        self.address_id = address_id
-
-    def __repr__(self):
-        return f"Company('{self.name}', '{self.address_id}')"
+class Company:
+    id: int
+    name: str
+    address: Address
 
     def __getitem__(self, item):
         return getattr(self, item)

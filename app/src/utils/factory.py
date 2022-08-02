@@ -16,9 +16,5 @@ def create_app(config: Config) -> str:
     app.register_blueprint(routes_company, url_prefix='/api')
     app.app_context()
     db.init_app(app)
-    if config.LOCALHOST:
-        with app.app_context():
-            db.create_all()
-            db.session.commit()
 
     return app

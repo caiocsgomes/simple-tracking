@@ -10,6 +10,7 @@ services:
       - '5432:5432'
     volumes:
       - db:/var/lib/postgresql/data
+      - ./scripts/001_create_database.sql:/docker-entrypoint-initdb.d/001_create_database.sql
   flask:
     build: .
     ports:
